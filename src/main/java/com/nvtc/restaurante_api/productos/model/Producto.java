@@ -16,7 +16,7 @@ public class Producto{
     private long id;
 
     private String nombre;
-    private Double precio;
+    private double precio;
     private Integer stock;
 
     private LocalDate fechaVencimiento;

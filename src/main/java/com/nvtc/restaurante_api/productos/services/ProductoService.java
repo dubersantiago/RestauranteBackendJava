@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.nvtc.restaurante_api.productos.dtos.CreateProdcutRequest;
 import com.nvtc.restaurante_api.productos.model.Producto;
 import com.nvtc.restaurante_api.productos.repository.ProductoRepository;
 
@@ -20,7 +21,12 @@ public class ProductoService {
         return productoRepository.findAll();
     }
     
-    public Producto guardar(Producto producto) {
+    public Producto guardar(CreateProdcutRequest productoDto) {
+        Producto producto = new Producto();
+        producto.setNombre(productoDto.getNombre());
+        producto.setPrecio(productoDto.getPrecio());
+        producto.setStock(productoDto.getStock());
+        producto.setFechaVencimiento(productoDto.getFechaVencimiento());
         return productoRepository.save(producto);
     }
 }

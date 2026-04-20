@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nvtc.restaurante_api.productos.dtos.CreateProdcutRequest;
 import com.nvtc.restaurante_api.productos.model.Producto;
 import com.nvtc.restaurante_api.productos.services.ProductoService;
 
@@ -27,7 +28,9 @@ public class ProductoController {
     }
 
     @PostMapping
-    public Producto crear(@RequestBody Producto producto) {
+    public Producto crear(@RequestBody CreateProdcutRequest producto) {
+        System.out.println("productos nombre recibido desde el dto");
+        System.out.println(producto.getNombre());
         return productoService.guardar(producto);
     }
 }
