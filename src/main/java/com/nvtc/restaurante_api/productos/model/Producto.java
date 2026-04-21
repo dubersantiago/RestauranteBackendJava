@@ -1,10 +1,16 @@
 package com.nvtc.restaurante_api.productos.model;
 
 import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.nvtc.restaurante_api.categorias.model.Categoria;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Data
@@ -21,4 +27,9 @@ public class Producto{
 
     private LocalDate fechaVencimiento;
     private Boolean activo = true;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "categoria_id",nullable = false)
+    private Categoria categoria;
 }

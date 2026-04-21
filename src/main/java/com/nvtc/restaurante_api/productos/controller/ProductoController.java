@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nvtc.restaurante_api.productos.dtos.CreateProdcutRequest;
+import com.nvtc.restaurante_api.productos.dtos.CreateProductRequest;
 import com.nvtc.restaurante_api.productos.model.Producto;
 import com.nvtc.restaurante_api.productos.services.ProductoService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/productos")
@@ -27,10 +27,11 @@ public class ProductoController {
         return productoService.listar();
     }
 
-    @PostMapping
-    public Producto crear(@RequestBody CreateProdcutRequest producto) {
-        System.out.println("productos nombre recibido desde el dto");
-        System.out.println(producto.getNombre());
+    @PostMapping(consumes = "application/json")
+    public Producto crear(@RequestBody CreateProductRequest producto) {
+        System.out.println("----------------------");
+        System.out.println(producto);
+        System.out.println("--------------------------");
         return productoService.guardar(producto);
     }
 }
