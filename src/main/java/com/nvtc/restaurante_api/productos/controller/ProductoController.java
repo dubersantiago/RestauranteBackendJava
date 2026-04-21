@@ -29,9 +29,6 @@ public class ProductoController {
 
     @PostMapping(consumes = "application/json")
     public Producto crear(@RequestBody CreateProductRequest producto) {
-        System.out.println("----------------------");
-        System.out.println(producto);
-        System.out.println("--------------------------");
         return productoService.guardar(producto);
     }
 }
