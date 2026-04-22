@@ -7,8 +7,11 @@ import org.springframework.stereotype.Service;
 import com.nvtc.restaurante_api.categorias.model.Categoria;
 import com.nvtc.restaurante_api.categorias.repository.CategoriaRepository;
 import com.nvtc.restaurante_api.productos.dtos.CreateProductRequest;
+import com.nvtc.restaurante_api.productos.dtos.ProductoResponseDTO;
 import com.nvtc.restaurante_api.productos.model.Producto;
 import com.nvtc.restaurante_api.productos.repository.ProductoRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class ProductoService {
@@ -21,11 +24,15 @@ public class ProductoService {
         this.categoriaRepository = categoriaRepository;
     }
 
-    public List<Producto> listar() {
-        return productoRepository.findAll();
+    public List<ProductoResponseDTO> listar() {
+        return productoRepository.findAll()
+            .stream()
+            .map(this::mapToProductResponse)
+            .toList();
     }
     
-    public Producto guardar(CreateProductRequest productoDto) {
+    @Transactional
+    public ProductoResponseDTO guardar(CreateProductRequest productoDto) {
         Categoria categoria = categoriaRepository.findById(productoDto.getCategoriaId())
         .orElseThrow(() -> new RuntimeException("Categoria no encontrada"));
 
@@ -36,6 +43,18 @@ public class ProductoService {
         producto.setFechaVencimiento(productoDto.getFechaVencimiento());
         producto.setCategoria(categoria);
 
-        return productoRepository.save(producto);
+        Producto productoGuardado=productoRepository.save(producto);
+        return mapToProductResponse(productoGuardado);
+    }
+
+    private ProductoResponseDTO mapToProductResponse(Producto producto){
+        ProductoResponseDTO response = new ProductoResponseDTO();
+        response.setId(producto.getId());
+        response.setNombre(producto.getNombre());
+        response.setPrecio(producto.getPrecio());
+        response.setStock(producto.getStock());
+        response.setCategoria(producto.getCategoria().getNombre());
+
+        return response;
     }
 }

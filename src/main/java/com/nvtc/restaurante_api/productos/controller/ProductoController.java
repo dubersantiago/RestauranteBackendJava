@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nvtc.restaurante_api.productos.dtos.CreateProductRequest;
+import com.nvtc.restaurante_api.productos.dtos.ProductoResponseDTO;
 import com.nvtc.restaurante_api.productos.model.Producto;
 import com.nvtc.restaurante_api.productos.services.ProductoService;
 
@@ -23,12 +24,12 @@ public class ProductoController {
     }
 
     @GetMapping
-    public List<Producto> listar() {
+    public List<ProductoResponseDTO> listar() {
         return productoService.listar();
     }
 
     @PostMapping(consumes = "application/json")
-    public Producto crear(@RequestBody CreateProductRequest producto) {
+    public ProductoResponseDTO crear(@RequestBody CreateProductRequest producto) {
         return productoService.guardar(producto);
     }
 }
