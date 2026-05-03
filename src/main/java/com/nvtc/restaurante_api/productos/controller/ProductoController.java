@@ -3,6 +3,7 @@ package com.nvtc.restaurante_api.productos.controller;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +27,11 @@ public class ProductoController {
     @GetMapping
     public List<ProductoResponseDTO> listar() {
         return productoService.listar();
+    }
+
+     @GetMapping("/{id}")
+    public String probar(@PathVariable Long id) {
+        return "app funcionando id ="+id;
     }
 
     @PostMapping(consumes = "application/json")
