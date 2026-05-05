@@ -11,6 +11,7 @@ import com.nvtc.restaurante_api.pedido.dtos.DetalleRequest;
 import com.nvtc.restaurante_api.pedido.dtos.DetalleResponse;
 import com.nvtc.restaurante_api.pedido.dtos.PedidoResponseDTO;
 import com.nvtc.restaurante_api.pedido.model.DetallePedido;
+import com.nvtc.restaurante_api.pedido.model.EstadoPedido;
 import com.nvtc.restaurante_api.pedido.model.Pedido;
 import com.nvtc.restaurante_api.pedido.repository.PedidoRepository;
 import com.nvtc.restaurante_api.productos.model.Producto;
@@ -36,6 +37,7 @@ public class PedidoService {
 
         Pedido pedido = new Pedido();
         pedido.setFecha(LocalDateTime.now());
+        pedido.setEstado(EstadoPedido.PENDIENTE);
 
         List<DetallePedido> detalles = new ArrayList<>();
         double total = 0;
@@ -93,6 +95,7 @@ public class PedidoService {
         response.setId(pedido.getId());
         response.setFecha(pedido.getFecha());
         response.setTotal(pedido.getTotal());
+        response.setEstado(pedido.getEstado());
 
         List<DetalleResponse> lista = new ArrayList<>();
 
