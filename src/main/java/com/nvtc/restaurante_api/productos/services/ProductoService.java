@@ -47,6 +47,23 @@ public class ProductoService {
         return mapToProductResponse(productoGuardado);
     }
 
+    @Transactional
+    public ProductoResponseDTO editar(Long id, CreateProductRequest productoDto) {
+        Producto producto = productoRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        Categoria categoria = categoriaRepository.findById(productoDto.getCategoriaId())
+            .orElseThrow(() -> new RuntimeException("Categoria no encontrada"));
+
+        producto.setNombre(productoDto.getNombre());
+        producto.setPrecio(productoDto.getPrecio());
+        producto.setStock(productoDto.getStock());
+        producto.setFechaVencimiento(productoDto.getFechaVencimiento());
+        producto.setCategoria(categoria);
+
+        return mapToProductResponse(productoRepository.save(producto));
+    }
+
     private ProductoResponseDTO mapToProductResponse(Producto producto){
         ProductoResponseDTO response = new ProductoResponseDTO();
         response.setId(producto.getId());

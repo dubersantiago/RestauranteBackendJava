@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,5 +38,10 @@ public class ProductoController {
     @PostMapping(consumes = "application/json")
     public ProductoResponseDTO crear(@RequestBody CreateProductRequest producto) {
         return productoService.guardar(producto);
+    }
+
+    @PutMapping(value = "/{id}", consumes = "application/json")
+    public ProductoResponseDTO editar(@PathVariable Long id, @RequestBody CreateProductRequest producto) {
+        return productoService.editar(id, producto);
     }
 }
