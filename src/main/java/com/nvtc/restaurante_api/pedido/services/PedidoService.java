@@ -89,6 +89,14 @@ public class PedidoService {
         return mapToResponseDTO(pedido);
     }
 
+    public PedidoResponseDTO cambiarEstado(Long id, EstadoPedido nuevoEstado) {
+        Pedido pedido = pedidoRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Pedido no encontrado"));
+
+        pedido.setEstado(nuevoEstado);
+        return mapToResponseDTO(pedidoRepository.save(pedido));
+    }
+
     private PedidoResponseDTO mapToResponseDTO(Pedido pedido){
         PedidoResponseDTO response = new PedidoResponseDTO();
 

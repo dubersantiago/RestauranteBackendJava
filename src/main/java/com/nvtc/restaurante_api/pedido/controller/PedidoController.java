@@ -3,13 +3,16 @@ package com.nvtc.restaurante_api.pedido.controller;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nvtc.restaurante_api.pedido.dtos.CreatePedidoDTO;
 import com.nvtc.restaurante_api.pedido.dtos.PedidoResponseDTO;
+import com.nvtc.restaurante_api.pedido.model.EstadoPedido;
 import com.nvtc.restaurante_api.pedido.services.PedidoService;
 
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,5 +40,10 @@ public class PedidoController {
     @GetMapping("/{id}")
     public PedidoResponseDTO buscarPedido(@PathVariable Long id){
         return pedidoService.obtenerPorId(id);
+    }
+
+    @PatchMapping("/{id}/estado")
+    public PedidoResponseDTO cambiarEstado(@PathVariable Long id, @RequestParam EstadoPedido estado){
+        return pedidoService.cambiarEstado(id, estado);
     }
 }
