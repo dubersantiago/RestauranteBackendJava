@@ -25,7 +25,7 @@ public class ProductoService {
     }
 
     public List<ProductoResponseDTO> listar() {
-        return productoRepository.findAll()
+        return productoRepository.findByStockGreaterThanAndActivoTrue(0)
             .stream()
             .map(this::mapToProductResponse)
             .toList();
@@ -71,6 +71,7 @@ public class ProductoService {
         response.setPrecio(producto.getPrecio());
         response.setStock(producto.getStock());
         response.setCategoria(producto.getCategoria().getNombre());
+        response.setDisponible(producto.getStock() != null && producto.getStock() > 0 && producto.getActivo());
 
         return response;
     }

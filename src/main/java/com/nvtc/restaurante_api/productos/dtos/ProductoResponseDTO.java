@@ -11,4 +11,5 @@ public class ProductoResponseDTO{
     private Double precio;
     private Integer stock;
     private String categoria;
+    private Boolean disponible;
 }
