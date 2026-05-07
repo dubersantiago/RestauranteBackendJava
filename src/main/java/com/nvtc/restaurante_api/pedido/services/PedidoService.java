@@ -16,7 +16,7 @@ import com.nvtc.restaurante_api.pedido.model.Pedido;
 import com.nvtc.restaurante_api.pedido.repository.PedidoRepository;
 import com.nvtc.restaurante_api.productos.model.Producto;
 import com.nvtc.restaurante_api.productos.repository.ProductoRepository;
-
+import com.nvtc.restaurante_api.exceptions.ItemAgotadoException; //Import de item agotado
 import jakarta.transaction.Transactional;
 
 @Service
@@ -45,10 +45,14 @@ public class PedidoService {
         for(DetalleRequest item: request.getDetalles()){
             Producto producto = productoRepository.findById(item.getProductoId())
             .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
-
-            if(producto.getStock()<item.getCantidad()){
-                throw new RuntimeException("Cantidad excede el stock");
-            }
+            
+//Validacion de stock con exception
+           if(producto.getStock() <= 0){
+    throw new ItemAgotadoException("El producto '" + producto.getNombre() + "' se ha agotado y no puede ser añadido.");
+}
+if(producto.getStock() < item.getCantidad()){
+    throw new ItemAgotadoException("Stock insuficiente para '" + producto.getNombre() + "'. Stock disponible: " + producto.getStock());
+}
 
             DetallePedido detalle = new DetallePedido();
             detalle.setProducto(producto);
