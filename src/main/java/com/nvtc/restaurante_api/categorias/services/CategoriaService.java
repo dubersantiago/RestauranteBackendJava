@@ -42,4 +42,11 @@ public class CategoriaService {
         dto.setNombre(categoria.getNombre());
         return dto;
     }
+
+    public CategoriaResponseDTO actualizar(Long id, CreateCategoriaRequest categoriaRequest) {
+        Categoria categoria = categoriaRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Categoria no encontrada con ID: " + id));
+        categoria.setNombre(categoriaRequest.getNombre());
+        return toDTO(categoriaRepository.save(categoria));
+    }
 }
