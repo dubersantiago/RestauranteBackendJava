@@ -22,4 +22,4 @@ jobs:
         run: chmod +x mvnw
 
       - name: Run unit tests
-        run: ./mvnw --no-transfer-progress test -Dtest=CategoriaServiceTest,HealthControllerTest
+        run: ./mvnw --no-transfer-progress test
